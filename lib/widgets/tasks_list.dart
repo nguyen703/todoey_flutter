@@ -18,20 +18,15 @@ class TasksList extends StatelessWidget {
               onDismissed: (DismissDirection direction) {
                 taskData.deleteTask(task);
               },
-              child: InkWell(
-                onTap: () {
-                  print('${task.name} clicked');
+              child: TaskTile(
+                isChecked: task.isDone,
+                taskTitle: task.name,
+                checkboxCallback: (checkboxState) {
+                  taskData.updateTask(task);
                 },
-                child: TaskTile(
-                  isChecked: task.isDone,
-                  taskTitle: task.name,
-                  checkboxCallback: (checkboxState) {
-                    taskData.updateTask(task);
-                  },
-                  longPressCallback: () {
-                    taskData.deleteTask(task);
-                  },
-                ),
+                longPressCallback: () {
+                  taskData.deleteTask(task);
+                },
               ),
               confirmDismiss: (direction) async {
                 // if (direction == DismissDirection.endToStart) {
