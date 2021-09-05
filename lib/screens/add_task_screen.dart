@@ -5,6 +5,8 @@ import 'package:todoey_flutter/models/task_data.dart';
 String newTaskTitle = '';
 
 class AddTaskScreen extends StatelessWidget {
+  final TextEditingController _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,6 +33,7 @@ class AddTaskScreen extends StatelessWidget {
                 ),
               ),
               TextField(
+                controller: _controller,
                 onChanged: (newText) {
                   newTaskTitle = newText;
                 },
@@ -39,6 +42,8 @@ class AddTaskScreen extends StatelessWidget {
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   hintText: 'Example: Meeting with Joe',
+
+                  // underline input border to be cyan
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.cyan),
                   ),
@@ -53,7 +58,9 @@ class AddTaskScreen extends StatelessWidget {
               SizedBox(height: 25.0),
               TextButton(
                 onPressed: () {
-                  if (newTaskTitle != '') {
+                  // check if the TextField is blank or not, then add task
+                  // to avoid blank TextField but still be able to add
+                  if (_controller.text != '') {
                     Provider.of<TaskData>(context, listen: false)
                         .addTask(newTaskTitle);
                     Navigator.pop(context);
